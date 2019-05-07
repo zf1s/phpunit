@@ -14,4 +14,4 @@ PHPUnit_TextUI_Command::main();
 PHPUnit %s by Sebastian Bergmann.
 
 
-Fatal error: Call to undefined function non_existing_function() in %s
+%s
