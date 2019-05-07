@@ -36,7 +36,7 @@ PHPUnit %s by Sebastian Bergmann.
     "suite": "BankAccountTest",
     "test": "BankAccountTest::testBalanceIsInitiallyZero",
     "status": "pass",
-    "time": %f,
+    "time": %s,
     "trace": [],
     "message": "",
     "output": ""
@@ -49,7 +49,7 @@ PHPUnit %s by Sebastian Bergmann.
     "suite": "BankAccountTest",
     "test": "BankAccountTest::testBalanceCannotBecomeNegative",
     "status": "pass",
-    "time": %f,
+    "time": %s,
     "trace": [],
     "message": "",
     "output": ""
@@ -62,7 +62,7 @@ PHPUnit %s by Sebastian Bergmann.
     "suite": "BankAccountTest",
     "test": "BankAccountTest::testBalanceCannotBecomeNegative2",
     "status": "pass",
-    "time": %f,
+    "time": %s,
     "trace": [],
     "message": "",
     "output": ""

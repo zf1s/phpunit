@@ -210,7 +210,7 @@ class PHPUnit_Util_Test
      */
     protected static function _parseAnnotationContent($message)
     {
-        if (strpos($message, '::') !== FALSE && count(explode('::', $message) == 2)) {
+        if (strpos($message, '::') !== FALSE && count(explode('::', $message)) == 2) {
             if (defined($message)) {
                 $message = constant($message);
             }
