@@ -1,5 +1,8 @@
 {
-    "name": "phpunit/phpunit",
+    "name": "zf1s/phpunit",
+    "replace": {
+        "phpunit/phpunit": "^3.7.38"
+    },
     "description": "The PHP Unit Testing framework.",
     "type": "library",
     "keywords": [
