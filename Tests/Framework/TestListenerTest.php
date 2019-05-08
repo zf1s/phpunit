@@ -42,7 +42,7 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Error.php';
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'TestError.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Failure.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Success.php';
 
@@ -118,7 +118,7 @@ class Framework_TestListenerTest extends PHPUnit_Framework_TestCase implements P
 
     public function testError()
     {
-        $test = new Error;
+        $test = new TestError;
         $test->run($this->result);
 
         $this->assertEquals(1, $this->errorCount);

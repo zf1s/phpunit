@@ -1918,7 +1918,7 @@ abstract class PHPUnit_Framework_Assert
 
         // assert any elements exist if true, assert no elements exist if false
         else if (is_bool($count)) {
-            $any = count($tags) > 0 && $tags[0] instanceof DOMNode;
+            $any = $tags && count($tags) > 0 && $tags[0] instanceof DOMNode;
 
             if ($count) {
                 self::assertTrue($any, $message);
@@ -2094,7 +2094,7 @@ abstract class PHPUnit_Framework_Assert
     {
         $dom     = PHPUnit_Util_XML::load($actual, $isHtml);
         $tags    = PHPUnit_Util_XML::findNodes($dom, $matcher, $isHtml);
-        $matched = count($tags) > 0 && $tags[0] instanceof DOMNode;
+        $matched = $tags && count($tags) > 0 && $tags[0] instanceof DOMNode;
 
         self::assertTrue($matched, $message);
     }
@@ -2117,7 +2117,7 @@ abstract class PHPUnit_Framework_Assert
     {
         $dom     = PHPUnit_Util_XML::load($actual, $isHtml);
         $tags    = PHPUnit_Util_XML::findNodes($dom, $matcher, $isHtml);
-        $matched = count($tags) > 0 && $tags[0] instanceof DOMNode;
+        $matched = $tags && count($tags) > 0 && $tags[0] instanceof DOMNode;
 
         self::assertFalse($matched, $message);
     }

@@ -1,5 +1,8 @@
 {
-    "name": "phpunit/phpunit",
+    "name": "zf1s/phpunit",
+    "replace": {
+        "phpunit/phpunit": "^3.7.38"
+    },
     "description": "The PHP Unit Testing framework.",
     "type": "library",
     "keywords": [
@@ -25,7 +28,7 @@
         "phpunit/php-file-iterator": "~1.3",
         "phpunit/php-text-template": "~1.1",
         "phpunit/php-code-coverage": "~1.2",
-        "phpunit/php-timer": "~1.0",
+        "phpunit/php-timer": "1.0.7",
         "phpunit/phpunit-mock-objects": "~1.2",
         "symfony/yaml": "~2.0",
         "ext-ctype": "*",
@@ -36,12 +39,12 @@
         "ext-spl": "*"
     },
     "require-dev": {
-        "pear-pear.php.net/pear": "1.9.4"
+        "pear-pear.php.net/pear": "~1.9|~1.10"
     },
     "repositories": [
         {
             "type": "pear",
-            "url": "http://pear.php.net"
+            "url": "https://pear.php.net"
         }
     ],
     "suggest": {

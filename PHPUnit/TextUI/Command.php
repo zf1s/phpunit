@@ -274,7 +274,7 @@ class PHPUnit_TextUI_Command
                           'tokenizer', 'No code coverage will be generated.'
                         );
 
-                        continue;
+                        break;
                     }
 
                     if (!extension_loaded('xdebug')) {
@@ -282,7 +282,7 @@ class PHPUnit_TextUI_Command
                           'Xdebug', 'No code coverage will be generated.'
                         );
 
-                        continue;
+                        break;
                     }
 
                     switch ($option[0]) {
