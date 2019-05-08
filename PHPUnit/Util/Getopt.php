@@ -77,7 +77,9 @@ class PHPUnit_Util_Getopt
         reset($args);
         array_map('trim', $args);
 
-        while (list($i, $arg) = each($args)) {
+        while (false !== $arg = current($args)) {
+            $i = key($args);
+            next($args);
             if ($arg == '') {
                 continue;
             }
@@ -88,20 +90,23 @@ class PHPUnit_Util_Getopt
             }
 
             if ($arg[0] != '-' ||
-                (strlen($arg) > 1 && $arg[1] == '-' && !$long_options)) {
-                $non_opts = array_merge($non_opts, array_slice($args, $i));
-                break;
-            }
-
-            elseif (strlen($arg) > 1 && $arg[1] == '-') {
+                (strlen($arg) > 1 && $arg[1] == '-' && !$long_options)
+            ) {
+                $non_opts[] = $args[$i];
+                continue;
+            } elseif (strlen($arg) > 1 && $arg[1] == '-') {
                 self::parseLongOption(
-                  substr($arg, 2), $long_options, $opts, $args
+                    substr($arg, 2),
+                    $long_options,
+                    $opts,
+                    $args
                 );
-            }
-
-            else {
+            } else {
                 self::parseShortOption(
-                  substr($arg, 1), $short_options, $opts, $args
+                    substr($arg, 1),
+                    $short_options,
+                    $opts,
+                    $args
                 );
             }
         }
@@ -118,32 +123,25 @@ class PHPUnit_Util_Getopt
             $opt_arg = NULL;
 
             if (($spec = strstr($short_options, $opt)) === FALSE ||
-                $arg[$i] == ':') {
+                $arg[$i] == ':'
+            ) {
                 throw new PHPUnit_Framework_Exception(
                   "unrecognized option -- $opt"
                 );
             }
 
             if (strlen($spec) > 1 && $spec[1] == ':') {
-                if (strlen($spec) > 2 && $spec[2] == ':') {
-                    if ($i + 1 < $argLen) {
-                        $opts[] = array($opt, substr($arg, $i + 1));
-                        break;
-                    }
-                } else {
-                    if ($i + 1 < $argLen) {
-                        $opts[] = array($opt, substr($arg, $i + 1));
-                        break;
-                    }
-
-                    else if (list(, $opt_arg) = each($args)) {
-                    }
-
-                    else {
+                if ($i + 1 < $argLen) {
+                    $opts[] = array($opt, substr($arg, $i + 1));
+                    break;
+                }
+                if (!(strlen($spec) > 2 && $spec[2] == ':')) {
+                    if (false === $opt_arg = current($args)) {
                         throw new PHPUnit_Framework_Exception(
                           "option requires an argument -- $opt"
                         );
                     }
+                    next($args);
                 }
             }
 
@@ -183,11 +181,13 @@ class PHPUnit_Util_Getopt
 
             if (substr($long_opt, -1) == '=') {
                 if (substr($long_opt, -2) != '==') {
-                    if (!strlen($opt_arg) &&
-                        !(list(, $opt_arg) = each($args))) {
-                        throw new PHPUnit_Framework_Exception(
-                          "option --$opt requires an argument"
-                        );
+                    if (!strlen($opt_arg)) {
+                        if (false === $opt_arg = current($args)) {
+                            throw new PHPUnit_Framework_Exception(
+                                "option --$opt requires an argument"
+                            );
+                        }
+                        next($args);
                     }
                 }
             }
@@ -198,7 +198,9 @@ class PHPUnit_Util_Getopt
                 );
             }
 
-            $opts[] = array('--' . $opt, $opt_arg);
+            $full_option = '--' . preg_replace('/={1,2}$/', '', $long_opt);
+            $opts[]      = array($full_option, $opt_arg);
+
             return;
         }
 
