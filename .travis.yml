@@ -1,12 +1,11 @@
 language: php
 php:
-  - 5.4
-  - 5.5
   - 5.6
   - 7.0
   - 7.1
   - 7.2
   - 7.3
+  - 7.4
 
 env:
   - INSTALL_PHP_INVOKER=0
@@ -20,8 +19,26 @@ matrix:
     - php: 5.3
       dist: precise
       env: INSTALL_PHP_INVOKER=1
+    - php: 5.4
+      dist: trusty
+      env: INSTALL_PHP_INVOKER=0
+    - php: 5.4
+      dist: trusty
+      env: INSTALL_PHP_INVOKER=1
+    - php: 5.5
+      dist: trusty
+      env: INSTALL_PHP_INVOKER=0
+    - php: 5.5
+      dist: trusty
+      env: INSTALL_PHP_INVOKER=1
+
+install:
+    # Travis updates composer to v2 on older images (because of a bug in composer, fixed in later v1 versions)
+    # and since "The PEAR repository has been removed from Composer 2.0" it makes "composer install" to fail on this repo
+    # revert to composer v1 (and run it outside the checkouted repo, because composer v2 is basically stuck on that error on any command)
+    - (cd .. && composer self-update --1)
 
 before_script:
-    - sh -c "if [ '$INSTALL_PHP_INVOKER' = '1' ]; then composer require --dev --prefer-source phpunit/php-invoker:\>=1.1.0,\<1.2.0; else composer install --dev --prefer-source; fi"
+    - travis_retry sh -c "if [ '$INSTALL_PHP_INVOKER' = '1' ]; then composer require --dev --prefer-source phpunit/php-invoker:\>=1.1.0,\<1.2.0; else composer install --dev --prefer-source; fi"
 
 script: ./phpunit.php --configuration ./build/travis-ci.xml
