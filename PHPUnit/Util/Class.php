@@ -149,24 +149,19 @@ class PHPUnit_Util_Class
             $typeHint  = '';
 
             if (!$forCall) {
-                if ($parameter->isArray()) {
-                    $typeHint = 'array ';
-                }
-
-                else if (version_compare(PHP_VERSION, '5.4', '>') &&
+                if (PHP_VERSION_ID >= 80000 ) {
+                    $typeHint = $parameter->hasType() ? (string)$parameter->getType() : 'mixed';
+                } elseif ($parameter->isArray()) {
+                    $typeHint = 'array';
+                } elseif (version_compare(PHP_VERSION, '5.4', '>') &&
                          $parameter->isCallable()) {
                     $typeHint = 'callable ';
-                }
-
-                else {
+                } else {
                     try {
                         $class = $parameter->getClass();
-                    }
-
-                    catch (ReflectionException $e) {
+                    } catch (ReflectionException $e) {
                         $class = FALSE;
                     }
-
                     if ($class) {
                         $typeHint = $class->getName() . ' ';
                     }

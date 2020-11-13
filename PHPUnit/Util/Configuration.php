@@ -196,7 +196,7 @@ class PHPUnit_Util_Configuration
     /**
      * @since  Method available since Release 3.4.0
      */
-    private final function __clone()
+    private function __clone()
     {
     }
 
