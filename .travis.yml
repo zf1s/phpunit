@@ -38,6 +38,9 @@ install:
     # and since "The PEAR repository has been removed from Composer 2.0" it makes "composer install" to fail on this repo
     # revert to composer v1 (and run it outside the checkouted repo, because composer v2 is basically stuck on that error on any command)
     - (cd .. && composer self-update --1)
+    - if [[ "$TRAVIS_PHP_VERSION" == 8* ]]; then echo 'xdebug.mode=coverage' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi
+    - echo $TRAVIS_PHP_VERSION
+    - cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
 
 before_script:
     - travis_retry sh -c "if [ '$INSTALL_PHP_INVOKER' = '1' ]; then composer require --dev --prefer-source phpunit/php-invoker:\>=1.1.0,\<1.2.0; else composer install --dev --prefer-source; fi"
