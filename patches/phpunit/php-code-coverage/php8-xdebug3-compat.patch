@@ -1,0 +1,22 @@
+--- PHP/CodeCoverage/Driver/Xdebug.php
++++ PHP/CodeCoverage/Driver/Xdebug.php
+@@ -67,11 +67,19 @@
+         }
+ 
+         if (version_compare(phpversion('xdebug'), '2.2.0-dev', '>=') &&
++            version_compare(phpversion('xdebug'), '3.0.0-dev', '<') &&
+             !ini_get('xdebug.coverage_enable')) {
+             throw new PHP_CodeCoverage_Exception(
+               'You need to set xdebug.coverage_enable=On in your php.ini.'
+             );
+         }
++
++        if (version_compare(phpversion('xdebug'), '3.0.0-dev', '>=') &&
++            ini_get('xdebug.mode') !== 'coverage') {
++            throw new PHP_CodeCoverage_Exception(
++              'You need to set xdebug.mode=coverage in your php.ini.'
++            );
++        }
+     }
+ 
+     /**
