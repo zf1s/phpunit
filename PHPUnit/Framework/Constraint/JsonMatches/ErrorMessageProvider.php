@@ -66,7 +66,7 @@ class PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider
     {
         switch ($error) {
             case JSON_ERROR_NONE:
-                return;
+                return '';
             case JSON_ERROR_DEPTH:
                 return $prefix . 'Maximum stack depth exceeded';
             case JSON_ERROR_STATE_MISMATCH:
