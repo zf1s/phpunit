@@ -1,0 +1,68 @@
+name: "Tests"
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} php-invoker:${{ matrix.php_invoker }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php:
+          - "5.3"
+          - "5.4"
+          - "5.5"
+          - "5.6"
+          - "7.0"
+          - "7.1"
+          - "7.2"
+          - "7.3"
+          - "7.4"
+          - "8.0"
+          - "8.1"
+        php_invoker:
+          - true
+          - false
+        include:
+          - php: "8.1"
+            experimental: true
+            php_invoker: true
+          - php: "8.1"
+            experimental: true
+            php_invoker: false
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: display_errors=off, log_errors=on
+          extensions: xdebug, ctype, dom, json, pcre, reflection spl
+        env:
+          # https://github.com/shivammathur/setup-php/issues/407#issuecomment-773675741
+          fail-fast: true
+
+      - name: Switch composer to v1
+        # Since "The PEAR repository has been removed from Composer 2.0" it makes "composer install" to fail on this repo
+        # revert to composer v1 (and run it outside the checkouted repo, because composer v2 is basically stuck on that error on any command)
+        run: |
+          composer self-update --1
+
+      - name: Install dependencies
+        env:
+          INSTALL_PHP_INVOKER: "${{ matrix.php_invoker == true }}"
+        run: |
+          if [ $INSTALL_PHP_INVOKER == true ]; then composer require --dev --prefer-source phpunit/php-invoker:\>=1.1.0,\<1.2.0; else composer install --dev --prefer-source; fi
+
+      - name: "Run PHPUnit tests (Experimental: ${{ matrix.experimental }})"
+        env:
+          FAILURE_ACTION: "${{ matrix.experimental == true }}"
+        run: ./phpunit.php --configuration ./build/travis-ci.xml || $FAILURE_ACTION
+
+# vim:ft=yaml:et:ts=2:sw=2
