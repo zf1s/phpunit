@@ -58,7 +58,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           ini-values: display_errors=off, log_errors=on
-          extensions: xdebug, ctype, dom, json, pcre, reflection spl
+          extensions: xdebug, ctype, dom, json, pcre, reflection, spl
         env:
           # https://github.com/shivammathur/setup-php/issues/407#issuecomment-773675741
           fail-fast: true
