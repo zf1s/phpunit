@@ -20,25 +20,26 @@ jobs:
           - "7.1"
           - "7.2"
           - "7.3"
-          - "7.4"
         php_invoker:
           - true
           - false
         include:
+          - php: "7.4"
+            coverage: true
+            php_invoker: true
+          - php: "7.4"
+            coverage: true
+            php_invoker: false
           - php: "8.0"
-            coverage: false
             php_invoker: true
           - php: "8.0"
-            coverage: false
             php_invoker: false
           - php: "8.1"
             experimental: true
             php_invoker: true
-            coverage: false
           - php: "8.1"
             experimental: true
             php_invoker: false
-            coverage: false
 
     steps:
       - name: Checkout Code
@@ -69,10 +70,10 @@ jobs:
       - name: "Run PHPUnit tests (Experimental: ${{ matrix.experimental }})"
         env:
           FAILURE_ACTION: "${{ matrix.experimental == true }}"
-          WITHOUT_COVERAGE: "${{ matrix.coverage == false }}"
+          WITH_COVERAGE: "${{ matrix.coverage == true }}"
         run: |
-          export CONFIG_FILE="./build/ci.xml"
-          if [ $WITHOUT_COVERAGE == true ]; then export CONFIG_FILE="./build/ci-no-coverage.xml"; fi
+          export CONFIG_FILE="./build/ci-no-coverage.xml"
+          if [[ $WITH_COVERAGE == true ]]; then export CONFIG_FILE="./build/ci.xml"; fi
           ./phpunit.php --configuration "${CONFIG_FILE}" || $FAILURE_ACTION;
 
 # vim:ft=yaml:et:ts=2:sw=2
