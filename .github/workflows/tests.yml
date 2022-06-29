@@ -21,8 +21,6 @@ jobs:
           - "7.2"
           - "7.3"
           - "7.4"
-          - "8.0"
-          - "8.1"
         php_invoker:
           - true
           - false
@@ -30,7 +28,7 @@ jobs:
           - php: "8.0"
             coverage: false
             php_invoker: true
-          - php: "8.1"
+          - php: "8.0"
             coverage: false
             php_invoker: false
           - php: "8.1"
