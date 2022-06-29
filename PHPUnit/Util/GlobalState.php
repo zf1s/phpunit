@@ -197,6 +197,13 @@ class PHPUnit_Util_GlobalState
         if (defined('__PHPUNIT_PHAR__')) {
             $prefix = 'phar://' . __PHPUNIT_PHAR__ . '/';
         }
+        
+        // Do not process bootstrap script - composer v2 compatibility
+        // https://github.com/composer/composer/issues/10387#issuecomment-1002942296
+        // https://github.com/sebastianbergmann/phpunit/pull/4846
+        while (strpos($files[0], 'bin/phpunit') !== false) {
+            array_shift($files);
+        }
 
         for ($i = count($files) - 1; $i > 0; $i--) {
             $file = $files[$i];
