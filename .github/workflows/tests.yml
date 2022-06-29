@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    name: PHP ${{ matrix.php }} php-invoker:${{ matrix.php_invoker }}
+    name: PHP:${{ matrix.php }} PHP_INVOKER:${{ toJSON(matrix.php_invoker) }} ALLOW_FAILURES:${{ toJSON(matrix.experimental) }} COVERAGE:${{ toJSON(matrix.coverage) }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -67,7 +67,7 @@ jobs:
         run: |
           if [ $INSTALL_PHP_INVOKER == true ]; then composer require --dev --prefer-source phpunit/php-invoker:\>=1.1.0,\<1.2.0; else composer install --dev --prefer-source; fi
 
-      - name: "Run PHPUnit tests (Experimental: ${{ matrix.experimental }})"
+      - name: "Run PHPUnit tests"
         env:
           FAILURE_ACTION: "${{ matrix.experimental == true }}"
           WITH_COVERAGE: "${{ matrix.coverage == true }}"
