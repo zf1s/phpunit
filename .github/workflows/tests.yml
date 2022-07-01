@@ -59,15 +59,12 @@ jobs:
           php-version: ${{ matrix.php }}
           ini-values: display_errors=off, log_errors=on
           extensions: xdebug, ctype, dom, json, pcre, reflection, spl
+          # Since "The PEAR repository has been removed from Composer 2.0" it makes "composer install" to fail on this repo
+          # revert to composer v1 (and run it outside the checkouted repo, because composer v2 is basically stuck on that error on any command)
+          tools: composer:v1
         env:
           # https://github.com/shivammathur/setup-php/issues/407#issuecomment-773675741
           fail-fast: true
-
-      - name: Switch composer to v1
-        # Since "The PEAR repository has been removed from Composer 2.0" it makes "composer install" to fail on this repo
-        # revert to composer v1 (and run it outside the checkouted repo, because composer v2 is basically stuck on that error on any command)
-        run: |
-          composer self-update --1
 
       - name: Install dependencies
         env:
