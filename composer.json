@@ -10,7 +10,7 @@
         "xunit",
         "testing"
     ],
-    "homepage": "http://www.phpunit.de/",
+    "homepage": "https://github.com/zf1s/phpunit",
     "license": "BSD-3-Clause",
     "authors": [
         {
@@ -20,8 +20,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-        "irc": "irc://irc.freenode.net/phpunit"
+        "issues": "https://github.com/zf1s/phpunit/issues"
     },
     "require": {
         "php": ">=5.3.3",
