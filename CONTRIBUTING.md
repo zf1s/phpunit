@@ -14,7 +14,7 @@ Using PHPUnit From a Git Checkout
 
 The following commands can be used to perform the initial checkout of PHPUnit:
 
-    git clone git://github.com/sebastianbergmann/phpunit.git
+    git clone git://github.com/zf1s/phpunit.git
     cd phpunit
 
 To retrieve PHPUnit's dependencies, you can use [Composer](http://getcomposer.org/download/). If you do not have Composer installed, you can download the latest PHAR with the following command:
