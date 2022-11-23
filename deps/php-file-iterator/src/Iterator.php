@@ -73,7 +73,7 @@ class File_Iterator extends FilterIterator
     /**
      * @return bool
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function accept()
     {
         $current  = $this->getInnerIterator()->current();

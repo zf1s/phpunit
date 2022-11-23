@@ -196,7 +196,7 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
      * @return integer
      * @since  Method available since Release 3.4.0
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->constraint);

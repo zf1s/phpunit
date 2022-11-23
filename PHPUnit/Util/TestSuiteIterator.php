@@ -80,7 +80,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      * Rewinds the Iterator to the first element.
      *
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->position = 0;
@@ -91,7 +91,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      *
      * @return boolean
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return $this->position < count($this->tests);
@@ -102,7 +102,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      *
      * @return integer
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->position;
@@ -113,7 +113,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      *
      * @return PHPUnit_Framework_Test
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->valid() ? $this->tests[$this->position] : NULL;
@@ -123,7 +123,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
      * Moves forward to next element.
      *
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function next()
     {
         $this->position++;

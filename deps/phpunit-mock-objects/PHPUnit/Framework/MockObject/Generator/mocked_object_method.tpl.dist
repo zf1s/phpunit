@@ -1,5 +1,5 @@
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     {modifier} function {reference}{method_name}({arguments_decl})
     {
         $arguments = array({arguments_call});

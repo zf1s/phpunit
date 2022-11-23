@@ -8,7 +8,7 @@ class DoubleTestCase implements PHPUnit_Framework_Test
         $this->testCase = $testCase;
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function count()
     {
         return 2;

@@ -1,5 +1,5 @@
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function {method_name}({arguments})
     {
     }
