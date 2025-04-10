@@ -4,3 +4,9 @@ This version of PHPUnit bases on release 3.7.38 and is adjusted for compatibilit
 The package was created especially for testing https://github.com/zf1s packages.
 
 All credits go to original PHPUnit author and contributors.
+
+### Running tests
+Run all tests:  
+```
+php phpunit.php --color --stop-on-error --stop-on-failure --stop-on-incomplete
+```

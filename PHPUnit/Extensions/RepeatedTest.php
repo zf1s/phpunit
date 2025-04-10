@@ -125,11 +125,11 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      * Runs the decorated test and collects the
      * result in a TestResult.
      *
-     * @param  PHPUnit_Framework_TestResult $result
+     * @param  ?PHPUnit_Framework_TestResult $result
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run(?PHPUnit_Framework_TestResult $result = NULL)
     {
         if ($result === NULL) {
             $result = $this->createResult();

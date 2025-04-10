@@ -25,14 +25,8 @@
     "support": {
         "issues": "https://github.com/zf1s/phpunit/issues"
     },
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.php.net"
-        }
-    ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=7.1",
         "phpunit/php-text-template": "^1.2.1",
         "phpunit/phpunit-mock-objects": "^1.2.3",
         "phpunit/php-file-iterator": "^1.4.5",
@@ -44,10 +38,8 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-reflection": "*",
-        "ext-spl": "*"
-    },
-    "require-dev": {
-        "pear-pear.php.net/pear": "~1.9|~1.10"
+        "ext-spl": "*",
+        "pear/pear": "^1.10"
     },
     "suggest": {
         "phpunit/php-invoker": "~1.1"

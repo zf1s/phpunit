@@ -672,11 +672,11 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      * Runs the test case and collects the results in a TestResult object.
      * If no TestResult object is passed a new one will be created.
      *
-     * @param  PHPUnit_Framework_TestResult $result
+     * @param  ?PHPUnit_Framework_TestResult $result
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run(?PHPUnit_Framework_TestResult $result = NULL)
     {
         if ($result === NULL) {
             $result = $this->createResult();

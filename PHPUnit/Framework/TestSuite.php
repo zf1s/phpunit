@@ -617,7 +617,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
     /**
      * Runs the tests and collects their result in a TestResult.
      *
-     * @param  PHPUnit_Framework_TestResult $result
+     * @param  ?PHPUnit_Framework_TestResult $result
      * @param  mixed                        $filter
      * @param  array                        $groups
      * @param  array                        $excludeGroups
@@ -625,7 +625,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL, $filter = FALSE, array $groups = array(), array $excludeGroups = array(), $processIsolation = FALSE)
+    public function run(?PHPUnit_Framework_TestResult $result = NULL, $filter = FALSE, array $groups = array(), array $excludeGroups = array(), $processIsolation = FALSE)
     {
         if ($result === NULL) {
             $result = $this->createResult();

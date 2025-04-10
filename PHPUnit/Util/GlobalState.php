@@ -343,7 +343,7 @@ class PHPUnit_Util_GlobalState
             foreach ($staticAttributes as $name => $value) {
                 $reflector = new ReflectionProperty($className, $name);
                 $reflector->setAccessible(TRUE);
-                $reflector->setValue(unserialize($value));
+                $reflector->setValue(null, unserialize($value));
             }
         }
 

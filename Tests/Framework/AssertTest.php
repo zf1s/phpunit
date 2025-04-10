@@ -66,6 +66,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPAR
 class Framework_AssertTest extends PHPUnit_Framework_TestCase
 {
     protected $filesDirectory;
+    protected $html;
 
     protected function setUp()
     {
