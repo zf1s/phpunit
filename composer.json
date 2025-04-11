@@ -25,12 +25,6 @@
     "support": {
         "issues": "https://github.com/zf1s/phpunit/issues"
     },
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.php.net"
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
         "phpunit/php-text-template": "^1.2.1",
@@ -47,7 +41,7 @@
         "ext-spl": "*"
     },
     "require-dev": {
-        "pear-pear.php.net/pear": "~1.9|~1.10"
+        "pear/pear": "^1.10"
     },
     "suggest": {
         "phpunit/php-invoker": "~1.1"
