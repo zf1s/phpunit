@@ -580,9 +580,13 @@ class PHPUnit_Framework_TestResult implements Countable
         $errorHandlerSet = FALSE;
 
         if ($this->convertErrorsToExceptions) {
+            $errorLevels = E_ALL;
+            if (PHP_VERSION_ID < 70400) {
+                $errorLevels = E_ALL | E_STRICT;
+            }
             $oldErrorHandler = set_error_handler(
-              array('PHPUnit_Util_ErrorHandler', 'handleError'),
-              E_ALL | E_STRICT
+                array('PHPUnit_Util_ErrorHandler', 'handleError'),
+                $errorLevels
             );
 
             if ($oldErrorHandler === NULL) {
