@@ -29,6 +29,10 @@
         {
             "type": "pear",
             "url": "https://pear.php.net"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:zf1s/compat.git"
         }
     ],
     "require": {
@@ -44,7 +48,8 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-reflection": "*",
-        "ext-spl": "*"
+        "ext-spl": "*",
+        "zf1s/compat": "^1.0"
     },
     "require-dev": {
         "pear-pear.php.net/pear": "~1.9|~1.10"

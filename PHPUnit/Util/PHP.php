@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -154,13 +157,16 @@ abstract class PHPUnit_Util_PHP
      * Runs a single job (PHP code) using a separate PHP process.
      *
      * @param  string                       $job
-     * @param  PHPUnit_Framework_TestCase   $test
-     * @param  PHPUnit_Framework_TestResult $result
+     * @param  PHPUnit_Framework_TestCase|null   $test
+     * @param  PHPUnit_Framework_TestResult|null $result
      * @return array|null
      * @throws PHPUnit_Framework_Exception
      */
-    public function runJob($job, PHPUnit_Framework_Test $test = NULL, PHPUnit_Framework_TestResult $result = NULL)
+    public function runJob($job, $test = NULL, $result = NULL)
     {
+        Types::isNullable('test', $test, 'PHPUnit_Framework_Test');
+        Types::isNullable('result', $result, 'PHPUnit_Framework_TestResult');
+
         $process = proc_open(
           $this->getPhpBinary(),
           array(

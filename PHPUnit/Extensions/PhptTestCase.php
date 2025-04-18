@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -115,12 +118,14 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
     /**
      * Runs a test and collects its result in a TestResult instance.
      *
-     * @param  PHPUnit_Framework_TestResult $result
+     * @param  PHPUnit_Framework_TestResult|null $result
      * @param  array                        $options
      * @return PHPUnit_Framework_TestResult
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL, array $options = array())
+    public function run($result = NULL, array $options = array())
     {
+        Types::isNullable('result', $result, 'PHPUnit_Framework_TestResult');
+
         if (!class_exists('PEAR_RunTest', FALSE)) {
             throw new PHPUnit_Framework_Exception('Class PEAR_RunTest not found.');
         }

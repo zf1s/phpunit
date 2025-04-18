@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -376,8 +379,10 @@ class PHPUnit_Framework_MockObject_Generator
      * @param  boolean $cloneArguments
      * @return array
      */
-    public static function generate($originalClassName, array $methods = NULL, $mockClassName = '', $callOriginalClone = TRUE, $callAutoload = TRUE, $cloneArguments = TRUE)
+    public static function generate($originalClassName, $methods = NULL, $mockClassName = '', $callOriginalClone = TRUE, $callAutoload = TRUE, $cloneArguments = TRUE)
     {
+        Types::isNullable('methods', $methods, 'array');
+    
         if ($mockClassName == '') {
             $key = md5(
               $originalClassName .

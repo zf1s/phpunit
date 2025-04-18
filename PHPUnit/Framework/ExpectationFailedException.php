@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -61,12 +64,15 @@
 class PHPUnit_Framework_ExpectationFailedException extends PHPUnit_Framework_AssertionFailedError
 {
     /**
-     * @var PHPUnit_Framework_ComparisonFailure
+     * @var null|PHPUnit_Framework_ComparisonFailure
      */
     protected $comparisonFailure;
 
-    public function __construct($message, PHPUnit_Framework_ComparisonFailure $comparisonFailure = NULL, Exception $previous = NULL)
+    public function __construct($message, $comparisonFailure = NULL, $previous = NULL)
     {
+        Types::isNullable('comparisonFailure', $comparisonFailure, 'PHPUnit_Framework_ComparisonFailure');
+        Types::isNullable('previous', $previous, 'Exception');
+
         $this->comparisonFailure = $comparisonFailure;
 
         parent::__construct($message, 0, $previous);

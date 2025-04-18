@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -672,12 +675,14 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      * Runs the test case and collects the results in a TestResult object.
      * If no TestResult object is passed a new one will be created.
      *
-     * @param  PHPUnit_Framework_TestResult $result
+     * @param  PHPUnit_Framework_TestResult|null $result
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run($result = NULL)
     {
+        Types::isNullable('result', $result, 'PHPUnit_Framework_TestResult');
+
         if ($result === NULL) {
             $result = $this->createResult();
         }

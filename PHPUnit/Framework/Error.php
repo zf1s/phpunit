@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -63,10 +66,12 @@ class PHPUnit_Framework_Error extends Exception
      * @param  integer    $code
      * @param  string     $file
      * @param  integer    $line
-     * @param  Exception  $previous
+     * @param  Exception|null  $previous
      */
-    public function __construct($message, $code, $file, $line, Exception $previous = NULL)
+    public function __construct($message, $code, $file, $line, $previous = NULL)
     {
+        Types::isNullable('previous', $previous, 'Exception');
+
         parent::__construct($message, $code, $previous);
 
         $this->file  = $file;

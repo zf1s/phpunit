@@ -1,4 +1,7 @@
 <?php
+
+use Zf1s\Compat\Types;
+
 /**
  * PHPUnit
  *
@@ -82,12 +85,15 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
     protected static $versionStringPrinted = FALSE;
 
     /**
-     * @param PHPUnit_Runner_TestSuiteLoader $loader
-     * @param PHP_CodeCoverage_Filter        $filter
+     * @param null|PHPUnit_Runner_TestSuiteLoader $loader
+     * @param null|PHP_CodeCoverage_Filter        $filter
      * @since Method available since Release 3.4.0
      */
-    public function __construct(PHPUnit_Runner_TestSuiteLoader $loader = NULL, PHP_CodeCoverage_Filter $filter = NULL)
+    public function __construct($loader = NULL, $filter = NULL)
     {
+        Types::isNullable('loader', $loader, 'PHPUnit_Runner_TestSuiteLoader');
+        Types::isNullable('filter', $filter, 'PHP_CodeCoverage_Filter');
+
         if ($filter === NULL) {
             $filter = new PHP_CodeCoverage_Filter;
         }
