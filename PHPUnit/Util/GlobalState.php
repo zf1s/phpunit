@@ -107,6 +107,10 @@ class PHPUnit_Util_GlobalState
             }
         }
 
+        // skip PEAR globals to avoid "Creation of dynamic property" deprecation
+        // on PHP 8.2+ when unserializing PEAR_Registry objects
+        $blacklist[] = '_PEAR_Config_instance';
+
         foreach (array_keys($GLOBALS) as $key) {
             if ($key != 'GLOBALS' &&
                 !in_array($key, $superGlobalArrays) &&
@@ -132,6 +136,9 @@ class PHPUnit_Util_GlobalState
                 self::restoreSuperGlobalArray($superGlobalArray);
             }
         }
+
+        // skip PEAR globals (see comment in backupGlobals)
+        $blacklist[] = '_PEAR_Config_instance';
 
         foreach (array_keys($GLOBALS) as $key) {
             if ($key != 'GLOBALS' &&
@@ -343,7 +350,8 @@ class PHPUnit_Util_GlobalState
             foreach ($staticAttributes as $name => $value) {
                 $reflector = new ReflectionProperty($className, $name);
                 $reflector->setAccessible(TRUE);
-                $reflector->setValue(unserialize($value));
+                // two-arg form: single-arg setValue() for static properties is deprecated in PHP 8.3
+                $reflector->setValue(null, unserialize($value));
             }
         }
 
