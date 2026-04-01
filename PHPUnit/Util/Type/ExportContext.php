@@ -141,8 +141,8 @@ class PHPUnit_Util_Type_ExportContext {
      */
     protected function addObject($value)
     {
-        if (!$this->objects->contains($value)) {
-            $this->objects->attach($value);
+        if (!$this->objects->offsetExists($value)) {
+            $this->objects->offsetSet($value, null);
         }
 
         return spl_object_hash($value);
@@ -180,7 +180,7 @@ class PHPUnit_Util_Type_ExportContext {
      */
     protected function containsObject($value)
     {
-        if ($this->objects->contains($value)) {
+        if ($this->objects->offsetExists($value)) {
             return spl_object_hash($value);
         }
 

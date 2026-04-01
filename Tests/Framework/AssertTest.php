@@ -101,7 +101,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         $a = new stdClass;
         $b = new stdClass;
         $c = new SplObjectStorage;
-        $c->attach($a);
+        $c->offsetSet($a);
 
         $this->assertContains($a, $c);
 
@@ -412,7 +412,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         $a = new stdClass;
         $b = new stdClass;
         $c = new SplObjectStorage;
-        $c->attach($a);
+        $c->offsetSet($a);
 
         $this->assertNotContains($b, $c);
 
@@ -633,9 +633,9 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         $object2 = new SampleClass(16, 23, 42);
         $object3 = new SampleClass( 4,  8, 15);
         $storage1 = new SplObjectStorage;
-        $storage1->attach($object1);
+        $storage1->offsetSet($object1);
         $storage2 = new SplObjectStorage;
-        $storage2->attach($object3); // same content, different object
+        $storage2->offsetSet($object3); // same content, different object
 
         // cannot use $filesDirectory, because neither setUp() nor
         // setUpBeforeClass() are executed before the data providers
@@ -724,9 +724,9 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         $object1 = new SampleClass(4, 8, 15);
         $object2 = new SampleClass(4, 8, 15);
         $storage1 = new SplObjectStorage;
-        $storage1->attach($object1);
+        $storage1->offsetSet($object1);
         $storage2 = new SplObjectStorage;
-        $storage2->attach($object1);
+        $storage2->offsetSet($object1);
 
         return array(
             // strings
