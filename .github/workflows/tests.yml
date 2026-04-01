@@ -46,7 +46,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          ini-values: display_errors=off, log_errors=on
+          # setup-php defaults to production ini which excludes E_DEPRECATED,
+          # override to catch deprecation warnings in tests
+          ini-values: error_reporting=E_ALL, display_errors=on, log_errors=on
           extensions: xdebug, ctype, dom, json, pcre, reflection, spl
           tools: composer
         env:
