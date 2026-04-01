@@ -327,7 +327,9 @@ class PHPUnit_Util_GlobalState
 
                         if (!isset($blacklist[$declaredClasses[$i]]) ||
                            !in_array($name, $blacklist[$declaredClasses[$i]])) {
-                            $attribute->setAccessible(TRUE);
+                            if (PHP_VERSION_ID < 80100) {
+                                $attribute->setAccessible(TRUE);
+                            }
                             $value = $attribute->getValue();
 
                             if (!$value instanceof Closure) {
@@ -349,7 +351,9 @@ class PHPUnit_Util_GlobalState
         foreach (self::$staticAttributes as $className => $staticAttributes) {
             foreach ($staticAttributes as $name => $value) {
                 $reflector = new ReflectionProperty($className, $name);
-                $reflector->setAccessible(TRUE);
+                if (PHP_VERSION_ID < 80100) {
+                    $reflector->setAccessible(TRUE);
+                }
                 // two-arg form: single-arg setValue() for static properties is deprecated in PHP 8.3
                 $reflector->setValue(null, unserialize($value));
             }

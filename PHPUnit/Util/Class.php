@@ -320,9 +320,12 @@ class PHPUnit_Util_Class
             if (!$attribute || $attribute->isPublic()) {
                 return $object->$attributeName;
             }
-            $attribute->setAccessible(TRUE);
+            if (PHP_VERSION_ID < 80100) {
+                $attribute->setAccessible(TRUE);
+            }
             $value = $attribute->getValue($object);
-            $attribute->setAccessible(FALSE);
+
+
 
             return $value;
         }
