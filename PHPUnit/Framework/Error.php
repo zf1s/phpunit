@@ -65,8 +65,12 @@ class PHPUnit_Framework_Error extends Exception
      * @param  integer    $line
      * @param  Exception  $previous
      */
-    public function __construct($message, $code, $file, $line, Exception $previous = NULL)
+    public function __construct($message, $code, $file, $line, $previous = NULL)
     {
+        if ($previous !== NULL && !$previous instanceof Exception) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(5, 'Exception');
+        }
+
         parent::__construct($message, $code, $previous);
 
         $this->file  = $file;

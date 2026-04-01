@@ -625,8 +625,12 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL, $filter = FALSE, array $groups = array(), array $excludeGroups = array(), $processIsolation = FALSE)
+    public function run($result = NULL, $filter = FALSE, array $groups = array(), array $excludeGroups = array(), $processIsolation = FALSE)
     {
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Framework_TestResult');
+        }
+
         if ($result === NULL) {
             $result = $this->createResult();
         }
@@ -690,7 +694,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
             foreach ($groups as $group) {
                 if (isset($this->groups[$group])) {
                     foreach ($this->groups[$group] as $test) {
-                        $tests->attach($test);
+                        $tests->offsetSet($test, null);
                     }
                 }
             }

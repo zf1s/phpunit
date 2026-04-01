@@ -137,8 +137,12 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      * @param  PHPUnit_Framework_TestResult $result
      * @return PHPUnit_Framework_TestResult
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run($result = NULL)
     {
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Framework_TestResult');
+        }
+
         if ($result === NULL) {
             $result = $this->createResult();
         }

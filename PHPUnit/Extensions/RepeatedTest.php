@@ -129,8 +129,12 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run($result = NULL)
     {
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Framework_TestResult');
+        }
+
         if ($result === NULL) {
             $result = $this->createResult();
         }

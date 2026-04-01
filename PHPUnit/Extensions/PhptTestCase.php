@@ -117,8 +117,12 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
      * @param  array                        $options
      * @return PHPUnit_Framework_TestResult
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL, array $options = array())
+    public function run($result = NULL, array $options = array())
     {
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Framework_TestResult');
+        }
+
         if (!class_exists('PEAR_RunTest', FALSE)) {
             $result->addFailure($this, new PHPUnit_Framework_SkippedTestError('PEAR_RunTest not available'), 0);
             return $result;

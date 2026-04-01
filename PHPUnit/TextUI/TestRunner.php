@@ -86,8 +86,15 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
      * @param PHP_CodeCoverage_Filter        $filter
      * @since Method available since Release 3.4.0
      */
-    public function __construct(PHPUnit_Runner_TestSuiteLoader $loader = NULL, PHP_CodeCoverage_Filter $filter = NULL)
+    public function __construct($loader = NULL, $filter = NULL)
     {
+        if ($loader !== NULL && !$loader instanceof PHPUnit_Runner_TestSuiteLoader) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Runner_TestSuiteLoader');
+        }
+        if ($filter !== NULL && !$filter instanceof PHP_CodeCoverage_Filter) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'PHP_CodeCoverage_Filter');
+        }
+
         if ($filter === NULL) {
             $filter = new PHP_CodeCoverage_Filter;
         }
