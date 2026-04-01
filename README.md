@@ -4,8 +4,3 @@ This version of PHPUnit bases on release 3.7.38 and is adjusted for compatibilit
 The package was created especially for testing https://github.com/zf1s packages.
 
 All credits go to original PHPUnit author and contributors.
-
-## Installing
-
-This package requires composer v1 due to its PEAR repository dependency.
-You can switch composer versions with `composer self-update --1` and `composer self-update --2`.

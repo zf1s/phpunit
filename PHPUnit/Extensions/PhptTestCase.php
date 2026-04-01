@@ -44,9 +44,7 @@
  */
 
 if (stream_resolve_include_path('PEAR/RunTest.php')) {
-    $currentErrorReporting = error_reporting(E_ERROR | E_WARNING | E_PARSE);
     require_once 'PEAR/RunTest.php';
-    error_reporting($currentErrorReporting);
 }
 
 /**
@@ -122,7 +120,8 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
     public function run(PHPUnit_Framework_TestResult $result = NULL, array $options = array())
     {
         if (!class_exists('PEAR_RunTest', FALSE)) {
-            throw new PHPUnit_Framework_Exception('Class PEAR_RunTest not found.');
+            $result->addFailure($this, new PHPUnit_Framework_SkippedTestError('PEAR_RunTest not available'), 0);
+            return $result;
         }
 
         if (isset($GLOBALS['_PEAR_destructor_object_list']) &&

@@ -48,12 +48,21 @@ jobs:
           php-version: ${{ matrix.php }}
           ini-values: display_errors=off, log_errors=on
           extensions: xdebug, ctype, dom, json, pcre, reflection, spl
-          # Since "The PEAR repository has been removed from Composer 2.0" it makes "composer install" to fail on this repo
-          # revert to composer v1 (and run it outside the checkouted repo, because composer v2 is basically stuck on that error on any command)
-          tools: composer:v1
+          tools: composer
         env:
           # https://github.com/shivammathur/setup-php/issues/407#issuecomment-773675741
           fail-fast: true
+
+      # PEAR_RunTest is needed for .phpt tests. The composer v2 packagist version
+      # of pear/pear requires PHP 5.4+, and the PHP 5.3-compatible version that was
+      # previously installable via composer v1 is no longer available since packagist
+      # dropped composer v1 support. Install via pear CLI provided by setup-php instead.
+      #
+      # pear install without sudo fails on PHP 5.6+ with "php_dir is not writeable"
+      # because setup-php creates root-owned PEAR directories for those versions.
+      # pear channel-update is needed to avoid "channel has updated its protocols" warning.
+      - name: Install PEAR
+        run: sudo pear channel-update pear.php.net && sudo pear install --force PEAR
 
       - name: Install dependencies
         env:
