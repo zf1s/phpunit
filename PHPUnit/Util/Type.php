@@ -127,7 +127,7 @@ class PHPUnit_Util_Type
             return 'false';
         }
 
-        if (is_float($value) && floatval(intval($value)) === $value) {
+        if (is_float($value) && is_finite($value) && floatval(intval($value)) === $value) {
             return "$value.0";
         }
 
