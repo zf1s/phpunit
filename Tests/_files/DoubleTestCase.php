@@ -14,8 +14,12 @@ class DoubleTestCase implements PHPUnit_Framework_Test
         return 2;
     }
 
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run($result = NULL)
     {
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Framework_TestResult');
+        }
+
         $result->startTest($this);
 
         $this->testCase->runBare();

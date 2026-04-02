@@ -159,8 +159,15 @@ abstract class PHPUnit_Util_PHP
      * @return array|null
      * @throws PHPUnit_Framework_Exception
      */
-    public function runJob($job, PHPUnit_Framework_Test $test = NULL, PHPUnit_Framework_TestResult $result = NULL)
+    public function runJob($job, $test = NULL, $result = NULL)
     {
+        if ($test !== NULL && !$test instanceof PHPUnit_Framework_Test) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'PHPUnit_Framework_Test');
+        }
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'PHPUnit_Framework_TestResult');
+        }
+
         $process = proc_open(
           $this->getPhpBinary(),
           array(

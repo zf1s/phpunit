@@ -676,8 +676,12 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run($result = NULL)
     {
+        if ($result !== NULL && !$result instanceof PHPUnit_Framework_TestResult) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'PHPUnit_Framework_TestResult');
+        }
+
         if ($result === NULL) {
             $result = $this->createResult();
         }
@@ -1673,21 +1677,29 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      * @return string
      * @since  Method available since Release 3.2.1
      */
-    protected function dataToString($data)
+    protected function dataToString($data, $depth = 0)
     {
+        // guard against infinite recursion from self-referencing arrays
+        // that print_r's *RECURSION* detection might miss
+        if ($depth > 25) {
+            return '*DEEP_NESTED*';
+        }
+
         $result = array();
 
         // There seems to be no other way to check arrays for recursion
         // http://www.php.net/manual/en/language.types.array.php#73936
-        preg_match_all('/\n            \[(\w+)\] => Array\s+\*RECURSION\*/', print_r($data, TRUE), $matches);
+        // suppress warnings from NAN/INF string coercion on PHP 8.5+ to avoid
+        // infinite recursion: warning → error handler → dataToString → print_r → warning
+        preg_match_all('/\n            \[(\w+)\] => Array\s+\*RECURSION\*/', @print_r($data, TRUE), $matches);
         $recursiveKeys = array_unique($matches[1]);
 
         // Convert to valid array keys
         // Numeric integer strings are automatically converted to integers
         // by PHP
         foreach ($recursiveKeys as $key => $recursiveKey) {
-            if ((string)(integer)$recursiveKey === $recursiveKey) {
-                $recursiveKeys[$key] = (integer)$recursiveKey;
+            if ((string)(int)$recursiveKey === $recursiveKey) {
+                $recursiveKeys[$key] = (int)$recursiveKey;
             }
         }
 
@@ -1697,7 +1709,7 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
             }
 
             else if (is_array($_data)) {
-                $result[] = 'array(' . $this->dataToString($_data) . ')';
+                $result[] = 'array(' . $this->dataToString($_data, $depth + 1) . ')';
             }
 
             else if (is_object($_data)) {

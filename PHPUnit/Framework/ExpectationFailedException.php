@@ -65,8 +65,15 @@ class PHPUnit_Framework_ExpectationFailedException extends PHPUnit_Framework_Ass
      */
     protected $comparisonFailure;
 
-    public function __construct($message, PHPUnit_Framework_ComparisonFailure $comparisonFailure = NULL, Exception $previous = NULL)
+    public function __construct($message, $comparisonFailure = NULL, $previous = NULL)
     {
+        if ($comparisonFailure !== NULL && !$comparisonFailure instanceof PHPUnit_Framework_ComparisonFailure) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'PHPUnit_Framework_ComparisonFailure');
+        }
+        if ($previous !== NULL && !$previous instanceof Exception) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'Exception');
+        }
+
         $this->comparisonFailure = $comparisonFailure;
 
         parent::__construct($message, 0, $previous);
