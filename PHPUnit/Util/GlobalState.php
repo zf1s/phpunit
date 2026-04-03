@@ -404,7 +404,20 @@ class PHPUnit_Util_GlobalState
         if (self::$phpunitFiles === NULL) {
             self::$phpunitFiles = array();
             self::addDirectoryContainingClassToPHPUnitFilesList('File_Iterator');
-            self::addDirectoryContainingClassToPHPUnitFilesList('PHP_CodeCoverage');
+            // phpunitFiles() collects directories of PHPUnit's internal packages
+            // to exclude them from stack traces and from the list of included files
+            // when running tests in separate processes.
+            //
+            // When code coverage is enabled, TestRunner loads PHP_CodeCoverage
+            // before any tests run, so class_exists() returns true here.
+            // When coverage is off, the class is not loaded and its directory
+            // does not need to be excluded from anything.
+            //
+            // Check without autoloading (false) to avoid triggering implicit
+            // nullable deprecation from php-code-coverage on php 8.4.
+            if (class_exists('PHP_CodeCoverage', false)) {
+                self::addDirectoryContainingClassToPHPUnitFilesList('PHP_CodeCoverage');
+            }
             self::addDirectoryContainingClassToPHPUnitFilesList('PHP_Invoker');
             self::addDirectoryContainingClassToPHPUnitFilesList('PHP_Timer');
             self::addDirectoryContainingClassToPHPUnitFilesList('PHP_Token');
