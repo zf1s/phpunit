@@ -72,7 +72,7 @@ class PHPUnit_Framework_Comparator_Double extends PHPUnit_Framework_Comparator_N
      */
     public function accepts($expected, $actual)
     {
-        return (is_double($expected) || is_double($actual)) && is_numeric($expected) && is_numeric($actual);
+        return (is_float($expected) || is_float($actual)) && is_numeric($expected) && is_numeric($actual);
     }
 
     /**

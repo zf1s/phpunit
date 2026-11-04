@@ -789,7 +789,9 @@ class PHPUnit_Framework_MockObject_Generator
             'method_name'     => $methodName,
             'modifier'        => $modifier,
             'reference'       => $reference,
-            'clone_arguments' => $cloneArguments ? 'TRUE' : 'FALSE'
+            'clone_arguments' => $cloneArguments ? 'TRUE' : 'FALSE',
+            // returning a value from a destructor is deprecated since PHP 8.6
+            'return_result'   => strtolower($methodName) == '__destruct' ? '' : 'return $result;'
           )
         );
 

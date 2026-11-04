@@ -178,6 +178,7 @@ spl_autoload_register(
             'phpunit_util_getopt' => '/Util/Getopt.php',
             'phpunit_util_globalstate' => '/Util/GlobalState.php',
             'phpunit_util_invalidargumenthelper' => '/Util/InvalidArgumentHelper.php',
+            'phpunit_util_invoker' => '/Util/Invoker.php',
             'phpunit_util_log_json' => '/Util/Log/JSON.php',
             'phpunit_util_log_junit' => '/Util/Log/JUnit.php',
             'phpunit_util_log_tap' => '/Util/Log/TAP.php',

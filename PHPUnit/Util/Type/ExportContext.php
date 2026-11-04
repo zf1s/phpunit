@@ -145,7 +145,10 @@ class PHPUnit_Util_Type_ExportContext {
             $this->objects->offsetSet($value, null);
         }
 
-        return spl_object_hash($value);
+        // same value as spl_object_hash(), which is deprecated since PHP 8.6
+        return PHP_VERSION_ID >= 80600
+            ? sprintf('%016x%016x', spl_object_id($value), 0)
+            : spl_object_hash($value);
     }
 
     /**
@@ -181,7 +184,10 @@ class PHPUnit_Util_Type_ExportContext {
     protected function containsObject($value)
     {
         if ($this->objects->offsetExists($value)) {
-            return spl_object_hash($value);
+            // same value as spl_object_hash(), which is deprecated since PHP 8.6
+            return PHP_VERSION_ID >= 80600
+                ? sprintf('%016x%016x', spl_object_id($value), 0)
+                : spl_object_hash($value);
         }
 
         return false;

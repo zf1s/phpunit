@@ -646,7 +646,7 @@ class PHPUnit_Framework_TestResult implements Countable
                     break;
                 }
 
-                $invoker = new PHP_Invoker;
+                $invoker = new PHPUnit_Util_Invoker;
                 $invoker->invoke(array($test, 'runBare'), array(), $_timeout);
             } else {
                 $test->runBare();
@@ -920,7 +920,7 @@ class PHPUnit_Framework_TestResult implements Countable
      */
     public function setTimeoutForSmallTests($timeout)
     {
-        if (is_integer($timeout)) {
+        if (is_int($timeout)) {
             $this->timeoutForSmallTests = $timeout;
         } else {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
@@ -936,7 +936,7 @@ class PHPUnit_Framework_TestResult implements Countable
      */
     public function setTimeoutForMediumTests($timeout)
     {
-        if (is_integer($timeout)) {
+        if (is_int($timeout)) {
             $this->timeoutForMediumTests = $timeout;
         } else {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
@@ -952,7 +952,7 @@ class PHPUnit_Framework_TestResult implements Countable
      */
     public function setTimeoutForLargeTests($timeout)
     {
-        if (is_integer($timeout)) {
+        if (is_int($timeout)) {
             $this->timeoutForLargeTests = $timeout;
         } else {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
