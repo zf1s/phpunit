@@ -45,58 +45,62 @@
 
 declare(ticks = 1);
 
-/**
- * PHP_Invoker from the optional php-invoker 1.1 package, with invoke() using is_int()
- * instead of is_integer(), which is deprecated since PHP 8.6. php-invoker 1.1 is no longer maintained.
- *
- * Only instantiated after class_exists('PHP_Invoker'), so php-invoker stays optional.
- *
- * @package    PHPUnit
- * @subpackage Util
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.7.45
- */
-class PHPUnit_Util_Invoker extends PHP_Invoker
-{
+// php-invoker is optional, so the class is only declared when it is installed - including this file
+// without it (e.g. code coverage with processUncoveredFilesFromWhitelist) must not fail
+if (class_exists('PHP_Invoker')) {
     /**
-     * Invokes a callable and raises an exception when the execution does not
-     * finish before the specified timeout.
+     * PHP_Invoker from the optional php-invoker 1.1 package, with invoke() using is_int()
+     * instead of is_integer(), which is deprecated since PHP 8.6. php-invoker 1.1 is no longer maintained.
      *
-     * @param  callable                 $callable
-     * @param  array                    $arguments
-     * @param  int                      $timeout   in seconds
-     * @return mixed
-     * @throws InvalidArgumentException
+     * Only instantiated after class_exists('PHP_Invoker'), so php-invoker stays optional.
+     *
+     * @package    PHPUnit
+     * @subpackage Util
+     * @author     Sebastian Bergmann <sebastian@phpunit.de>
+     * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
+     * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+     * @link       http://www.phpunit.de/
+     * @since      Class available since Release 3.7.45
      */
-    public function invoke($callable, array $arguments, $timeout)
+    class PHPUnit_Util_Invoker extends PHP_Invoker
     {
-        if (!is_callable($callable)) {
-            throw new InvalidArgumentException;
-        }
+        /**
+         * Invokes a callable and raises an exception when the execution does not
+         * finish before the specified timeout.
+         *
+         * @param  callable                 $callable
+         * @param  array                    $arguments
+         * @param  int                      $timeout   in seconds
+         * @return mixed
+         * @throws InvalidArgumentException
+         */
+        public function invoke($callable, array $arguments, $timeout)
+        {
+            if (!is_callable($callable)) {
+                throw new InvalidArgumentException;
+            }
 
-        if (!is_int($timeout)) {
-            throw new InvalidArgumentException;
-        }
+            if (!is_int($timeout)) {
+                throw new InvalidArgumentException;
+            }
 
-        pcntl_signal(SIGALRM, array($this, 'callback'), TRUE);
-        pcntl_alarm($timeout);
+            pcntl_signal(SIGALRM, array($this, 'callback'), TRUE);
+            pcntl_alarm($timeout);
 
-        $this->timeout = $timeout;
+            $this->timeout = $timeout;
 
-        try {
-            $result = call_user_func_array($callable, $arguments);
-        }
+            try {
+                $result = call_user_func_array($callable, $arguments);
+            }
 
-        catch (Exception $e) {
+            catch (Exception $e) {
+                pcntl_alarm(0);
+                throw $e;
+            }
+
             pcntl_alarm(0);
-            throw $e;
+
+            return $result;
         }
-
-        pcntl_alarm(0);
-
-        return $result;
     }
 }
