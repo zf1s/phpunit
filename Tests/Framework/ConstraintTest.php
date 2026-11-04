@@ -712,8 +712,9 @@ EOF
         $a = new stdClass;
         $a->foo = 'bar';
         $b = new stdClass;
-        $ahash = spl_object_hash($a);
-        $bhash = spl_object_hash($b);
+        // same values as spl_object_hash(), which is deprecated since PHP 8.6
+        $ahash = PHP_VERSION_ID >= 80600 ? sprintf('%016x%016x', spl_object_id($a), 0) : spl_object_hash($a);
+        $bhash = PHP_VERSION_ID >= 80600 ? sprintf('%016x%016x', spl_object_id($b), 0) : spl_object_hash($b);
 
         $c = new stdClass;
         $c->foo = 'bar';
@@ -737,8 +738,13 @@ EOF
         $storage1->offsetSet($b);
         $storage2 = new SplObjectStorage;
         $storage2->offsetSet($b);
-        $storage1hash = spl_object_hash($storage1);
-        $storage2hash = spl_object_hash($storage2);
+        // same values as spl_object_hash(), which is deprecated since PHP 8.6
+        $storage1hash = PHP_VERSION_ID >= 80600
+            ? sprintf('%016x%016x', spl_object_id($storage1), 0)
+            : spl_object_hash($storage1);
+        $storage2hash = PHP_VERSION_ID >= 80600
+            ? sprintf('%016x%016x', spl_object_id($storage2), 0)
+            : spl_object_hash($storage2);
 
         $dom1 = new DOMDocument;
         $dom1->preserveWhiteSpace = FALSE;

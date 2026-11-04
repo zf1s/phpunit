@@ -283,7 +283,11 @@ class PHPUnit_Util_Type
         // Format the output similarly to print_r() in this case
         if ($object instanceof SplObjectStorage) {
             foreach ($object as $key => $value) {
-                $array[spl_object_hash($value)] = array(
+                // same value as spl_object_hash(), which is deprecated since PHP 8.6
+                $hash = PHP_VERSION_ID >= 80600
+                    ? sprintf('%016x%016x', spl_object_id($value), 0)
+                    : spl_object_hash($value);
+                $array[$hash] = array(
                     'obj' => $value,
                     'inf' => $object->getInfo(),
                 );
