@@ -19,5 +19,5 @@
           )
         );
 
-        return $result;
+        {return_result}
     }
