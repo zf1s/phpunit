@@ -646,7 +646,7 @@ class PHPUnit_Framework_TestResult implements Countable
                     break;
                 }
 
-                $invoker = new PHP_Invoker;
+                $invoker = new PHPUnit_Util_Invoker;
                 $invoker->invoke(array($test, 'runBare'), array(), $_timeout);
             } else {
                 $test->runBare();
